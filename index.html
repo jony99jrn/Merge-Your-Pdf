@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staple — merge your PDFs</title>
+<meta name="description" content="Combine multiple PDFs into one file, in order, right in your browser. Built for students turning in assignments.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231E3B2C'/%3E%3Crect x='14' y='16' width='8' height='32' rx='3' fill='%23E8C547'/%3E%3Crect x='42' y='16' width='8' height='32' rx='3' fill='%23E8C547'/%3E%3Crect x='14' y='16' width='36' height='8' rx='3' fill='%23E8C547'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="notebook">
+  <div class="spine" aria-hidden="true"></div>
+
+  <main class="pages">
+
+    <header class="hero">
+      <p class="eyebrow">for the night before the deadline</p>
+      <h1>Staple your semester<br>back together.</h1>
+      <p class="lede">Drop in your PDFs, check the order, and merge them into one file. Nothing gets uploaded anywhere — it all happens right here in your browser.</p>
+    </header>
+
+    <section class="card" id="step-upload" aria-labelledby="step1-title">
+      <h2 id="step1-title"><span class="step-num">01</span>Add your files</h2>
+
+      <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-describedby="dropzoneHint">
+        <svg class="dz-icon" viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="10" y="6" width="22" height="30" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"/>
+          <rect x="16" y="12" width="22" height="30" rx="2" fill="var(--paper)" stroke="currentColor" stroke-width="2.5"/>
+          <line x1="21" y1="20" x2="33" y2="20" stroke="currentColor" stroke-width="2"/>
+          <line x1="21" y1="26" x2="33" y2="26" stroke="currentColor" stroke-width="2"/>
+          <line x1="21" y1="32" x2="29" y2="32" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <p class="dz-title">Drag PDFs here, or <span class="dz-browse">browse your files</span></p>
+        <p id="dropzoneHint" class="dz-hint">PDF files only · stays on this device</p>
+        <input id="fileInput" type="file" accept="application/pdf,.pdf" multiple hidden>
+      </div>
+
+      <p id="fileError" class="error-msg" role="alert" hidden></p>
+    </section>
+
+    <section class="card" id="step-order" aria-labelledby="step2-title" hidden>
+      <h2 id="step2-title"><span class="step-num">02</span>Check the order</h2>
+      <p class="hint">This is the order they'll be merged in — top to bottom. Drag a page, or use the arrows, to fix it.</p>
+      <ul id="fileList" class="file-list"></ul>
+    </section>
+
+    <section class="card" id="step-merge" aria-labelledby="step3-title" hidden>
+      <h2 id="step3-title"><span class="step-num">03</span>Staple &amp; download</h2>
+
+      <div class="merge-row">
+        <label for="outputName" class="output-label">File name</label>
+        <div class="output-name-wrap">
+          <input id="outputName" type="text" value="merged" maxlength="60" autocomplete="off">
+          <span aria-hidden="true">.pdf</span>
+        </div>
+      </div>
+
+      <button id="mergeBtn" class="btn btn-primary" disabled>Merge PDFs</button>
+
+      <div id="mergeResult" class="merge-result" hidden>
+        <svg class="staple-icon" id="stapleIcon" viewBox="0 0 64 40" aria-hidden="true">
+          <g class="staple-legs">
+            <rect class="leg leg-left" x="8" y="4" width="7" height="26" rx="3"/>
+            <rect class="leg leg-right" x="49" y="4" width="7" height="26" rx="3"/>
+            <rect class="bridge" x="8" y="2" width="48" height="7" rx="3"/>
+          </g>
+        </svg>
+        <p id="mergeSummary" class="merge-summary"></p>
+        <button id="downloadBtn" class="btn btn-primary">Download PDF</button>
+        <button id="resetBtn" class="btn btn-ghost">Start a new merge</button>
+      </div>
+
+      <p id="statusRegion" class="status-region" role="status" aria-live="polite"></p>
+    </section>
+
+    <footer class="footer">
+      <p>Built for library basement wifi. Your files never leave your device.</p>
+    </footer>
+
+  </main>
+</div>
+
+<div id="loadingOverlay" class="loading-overlay" hidden role="alert" aria-live="assertive">
+  <svg class="stapler" viewBox="0 0 64 40" aria-hidden="true">
+    <g class="staple-legs">
+      <rect class="leg leg-left" x="8" y="4" width="7" height="26" rx="3"/>
+      <rect class="leg leg-right" x="49" y="4" width="7" height="26" rx="3"/>
+      <rect class="bridge" x="8" y="2" width="48" height="7" rx="3"/>
+    </g>
+  </svg>
+  <p id="loadingText">Stapling your pages together&hellip;</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
