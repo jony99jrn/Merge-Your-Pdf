@@ -23,6 +23,14 @@
   box-sizing: border-box;
 }
 
+/* Elements toggled with the `hidden` attribute (dropzone sections, the
+   merge result, the loading overlay) must actually disappear even though
+   their own class also sets a `display` value like flex — without this,
+   the class's display wins and the element stays visible. */
+[hidden] {
+  display: none !important;
+}
+
 html,
 body {
   margin: 0;
